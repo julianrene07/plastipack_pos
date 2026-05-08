@@ -1,24 +1,27 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 
 const app = express();
 
-// Middlewares
-app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Allow-Private-Network', 'true');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  next();
+});
+
 app.use(express.json());
-
-// Rutas
 app.use('/api/references', require('./routes/references'));
+app.use('/api/orders', require('./routes/orders'));
+app.use('/api/production', require('./routes/production'));
 
-// Ruta de prueba
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'PlastiPack API funcionando ✅' });
 });
-app.use('/api/references', require('./routes/references'));
-app.use('/api/orders', require('./routes/orders'));
-// Conexión MongoDB
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB conectado');
@@ -27,6 +30,6 @@ mongoose.connect(process.env.MONGO_URI)
     });
   })
   .catch(err => {
-    console.error('❌ Error conectando MongoDB:', err.message);
+    console.error('❌ Error:', err.message);
     process.exit(1);
   });

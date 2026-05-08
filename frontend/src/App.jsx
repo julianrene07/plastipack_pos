@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import References from './pages/References';
+import Orders from './pages/Orders';
+import Production from './pages/Production';
 
 export default function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen flex flex-col">
-        {/* Navbar */}
         <nav className="bg-blue-800 text-white px-4 py-2 flex items-center gap-6 shadow-md">
           <div className="font-bold text-lg">🏭 PlastiPack POS</div>
           <NavLink to="/referencias"
@@ -21,8 +22,6 @@ export default function App() {
             ⚙️ Producción
           </NavLink>
         </nav>
-
-        {/* Contenido */}
         <main className="flex-1 overflow-hidden">
           <Routes>
             <Route path="/" element={
@@ -33,8 +32,8 @@ export default function App() {
               </div>
             } />
             <Route path="/referencias" element={<References />} />
-            <Route path="/pedidos" element={<div className="p-8 text-center text-gray-400">📋 Módulo de Pedidos - Próximamente</div>} />
-            <Route path="/produccion" element={<div className="p-8 text-center text-gray-400">⚙️ Módulo de Producción - Próximamente</div>} />
+            <Route path="/pedidos" element={<Orders />} />
+           <Route path="/produccion" element={<Production />} />
           </Routes>
         </main>
       </div>
