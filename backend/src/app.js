@@ -16,7 +16,8 @@ app.use('/api/references', require('./routes/references'));
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'PlastiPack API funcionando ✅' });
 });
-
+app.use('/api/references', require('./routes/references'));
+app.use('/api/orders', require('./routes/orders'));
 // Conexión MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
